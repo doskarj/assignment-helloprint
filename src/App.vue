@@ -1,26 +1,56 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <h1>assignment-helloprint</h1>
+
+  <Suspense v-if="accessToken">
+    <template #default>
+      <SpotifyPlayer />
+    </template>
+    <template #fallback>
+      Loading ...
+    </template>
+  </Suspense>
+
+  <SpotifyLogin v-else />
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import spotifyStore from '@/store/spotify'
+import SpotifyLogin from '@/components/SpotifyLogin'
+import SpotifyPlayer from '@/components/SpotifyPlayer'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    HelloWorld
+    SpotifyLogin,
+    SpotifyPlayer
+  },
+
+  mounted() {
+    spotifyStore.getAccessToken()
+  },
+
+  setup() {
+    return {
+      accessToken: spotifyStore.accessToken
+    }
   }
-};
+}
 </script>
 
 <style>
+html,
+body,
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  margin: 0;
+  padding: 0;
+
+  height: 100%;
+  width: 100%;
+
+  font-family: 'Arial', cursive;
+}
+
+h1 {
+  margin: 1rem;
 }
 </style>
