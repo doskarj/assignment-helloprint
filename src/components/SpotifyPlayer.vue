@@ -13,11 +13,9 @@
           {{ spotifyData.is_playing ? 'Playing' : 'Paused' }}
         </div>
         <div class="progress">
-          <div class="progress__bar" style="{progressBarStyles}" />
+          <div class="progress__bar" :style="progressBarStyles" />
         </div>
       </div>
-      <div class="background" style="{backgroundStyles}" />
-      {" "}
     </div>
   </div>
 </template>
@@ -30,17 +28,29 @@ export default {
 
   async setup() {
     await spotifyStore.getCurrentlyPlaying()
+    const data = spotifyStore.spotifyData
+
+    const progressBarStyles = {
+      width: (data.progress_ms * 100) / data.item.duration_ms + '%'
+    }
 
     return {
-      spotifyData: spotifyStore.spotifyData
+      spotifyData: data,
+      progressBarStyles
     }
   }
 }
 </script>
 
 <style scoped>
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .now-playing__name {
   font-size: 1.5em;
+  margin-top: 0.5em;
   margin-bottom: 0.2em;
 }
 .now-playing__artist {
@@ -60,7 +70,6 @@ export default {
   width: 100%;
 }
 .now-playing__side {
-  margin-left: 5%;
   width: 45%;
 }
 /** Progress **/
@@ -71,7 +80,11 @@ export default {
   overflow: hidden;
 }
 .progress__bar {
-  background-color: #eee;
-  height: 4px;
+  background-color: #1db954;
+  height: 6px;
+}
+.background {
+  width: 100vw;
+  height: 100vh;
 }
 </style>

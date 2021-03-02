@@ -1,16 +1,18 @@
 <template>
-  <h1>assignment-helloprint</h1>
+  <main>
+    <h1>Simple Spotify Player</h1>
 
-  <Suspense v-if="accessToken">
-    <template #default>
-      <SpotifyPlayer />
-    </template>
-    <template #fallback>
-      Loading ...
-    </template>
-  </Suspense>
+    <Suspense v-if="accessToken">
+      <template #default>
+        <SpotifyPlayer />
+      </template>
+      <template #fallback>
+        Loading ...
+      </template>
+    </Suspense>
 
-  <SpotifyLogin v-else />
+    <SpotifyLogin v-else />
+  </main>
 </template>
 
 <script>
@@ -47,10 +49,19 @@ body,
   height: 100%;
   width: 100%;
 
-  font-family: 'Arial', cursive;
+  font-family: 'Helvetica Neue', cursive;
+}
+
+main {
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
 }
 
 h1 {
-  margin: 1rem;
+  margin: 2rem 0rem;
+}
+a {
+  text-decoration: none;
 }
 </style>
